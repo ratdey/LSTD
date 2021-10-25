@@ -14,8 +14,8 @@ run:	- add -d argument to run using default parameter values
 			- run from the location containing script
 		- run without arguments for manual input
 		- STATEDIM and envName are environment specific, can not be changed through CLI
-output:	- prints result and beta matrix
-		- saves beta matrix in 'beta.txt'
+output:	- prints result and beta vector
+		- saves beta vector in 'beta.txt'
 '''
 
 
@@ -26,13 +26,12 @@ PARAMETERS
 GAMMA = 1
 LAMBDA = 0.9
 
-F_BASE = 3 		# basis vector will have length F_BASE * stateDimension
-EPCOUNT = 1		# number of episodes to run
-
+F_BASE = 3 	# basis vector will have length F_BASE * stateDimension
 STATEDIM = 4 	# for 2x2 state feature matrix
+EPCOUNT = 1	# number of episodes to run
 
 DIRPATH = os.getcwd() + "/rl_trees/" # data folder path wrt script directory
-
+BETAFILEPATH = "./beta.txt"
 
 '''
 Environment class
@@ -155,7 +154,7 @@ class LSTD:
 		self.E = np.zeros(self.basis)
 		return
 
-	# returns Beta matrix
+	# returns Beta vector
 	def getBeta(self):
 		return np.dot(np.linalg.pinv(self.A), self.B)
 
@@ -223,11 +222,12 @@ def runEnv(envName):
 						td.update(env.stateData[curState], reward, None)
 
 	# output
+	np.savetxt(BETAFILEPATH, td.getBeta())
+	
 	print('\nResult:\n')
 	print(result)
 	print('\nBeta value:\n')
 	print(td.getBeta())
-	np.savetxt('beta.txt', td.getBeta())
 	return
 	
 
