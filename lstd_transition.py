@@ -112,6 +112,7 @@ class LSTD:
 		self.A = np.zeros((self.basis, self.basis))
 		self.B = np.zeros(self.basis)
 		self.E = np.zeros(self.basis)
+		self.beta = None
 		'''
 		generate matrix for fourier transform with base F_BASE
 		e.g. 	0000
@@ -157,6 +158,14 @@ class LSTD:
 	# returns Beta vector
 	def getBeta(self):
 		return np.dot(np.linalg.pinv(self.A), self.B)
+	
+	# calculates state value
+	def estimateVal(self, state):
+		if self.beta is None:
+			self.beta = np.dot(np.linalg.pinv(self.A), self.B)
+		state = np.array(state).flatten()
+		phi = self.getFVec(state)
+		return np.dot(self.beta, phi)
 
 
 
