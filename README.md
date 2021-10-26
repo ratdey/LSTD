@@ -15,5 +15,4 @@ lstd_transition.py
 
 value_estimator.py
 - reads beta vector from file and calculates value of a state
-- demonstrates how it can be used
-- Note: estimateVal() can be added to LSTD class in lstd_transition.py if needed
+- demonstrates how the class can be used
