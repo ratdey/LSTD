@@ -17,11 +17,11 @@ F_BASE = 3
 STATEDIM = 4
 
 class Estimator:
-	def __init__(self):
+	def __init__(self, file):
 		self.stateDim = STATEDIM
 		self.basis = F_BASE**self.stateDim
 		# load beta
-		self.beta = np.loadtxt(BETAFILEPATH)
+		self.beta = np.loadtxt(file)
 
 		#generate Fourier matrix C
 		self.FMat = np.zeros((self.basis, self.stateDim))
@@ -49,7 +49,7 @@ class Estimator:
 
 
 if __name__ == '__main__':
-	estimator = Estimator()
+	estimator = Estimator(BETAFILEPATH)
 
 	# calculate estimated value of the state
 	# estimator.estimateVal(stateFeatures)
